@@ -2,6 +2,7 @@
 
 
 Consideraciones hecha para la tarea 1:
+
 -Respecto al uso de imágenes, para ahorrarme el tener que buscar fotos sin copyright decidí utilizar imágenes hechas por IA, después quiero agregar imágenes reales ya que por ahora fue difícil conseguir imagénes de algún club de la pelea...
 
 -Respecto al formulario, al llenar el número de celular permití la opción de escribirlo con el código +56 o sin él.
