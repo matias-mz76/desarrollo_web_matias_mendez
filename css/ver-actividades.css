@@ -1,0 +1,157 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Encabezado */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+/* Botón de navegación */
+.home-button {
+    display: block;
+    width: 250px;
+    margin: 0 auto 30px;
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #2980b9;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Encabezados de tabla */
+thead {
+    background-color: #3498db;
+    color: white;
+}
+
+thead th {
+    text-align: left;
+    padding: 15px;
+    text-transform: uppercase;
+}
+
+/* Celdas de datos */
+tbody td {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+/* Columnas de inicio y término con más espacio */
+tbody td:nth-child(1),
+tbody td:nth-child(2) {
+    min-width: 180px;
+    white-space: nowrap;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Imágenes de actividades */
+.activity-image {
+    width: 320px;
+    height: 240px;
+    object-fit: cover;
+    margin: 5px;
+}
+
+/* Contenedor de imágenes */
+tbody td:last-child {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+/* Scrollbar personalizado */
+tbody td:last-child::-webkit-scrollbar {
+    height: 8px;
+}
+
+tbody td:last-child::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+tbody td:last-child::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    table {
+        font-size: 0.9rem;
+    }
+
+    tbody td:nth-child(1),
+    tbody td:nth-child(2) {
+        min-width: 150px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .home-button {
+        width: 100%;
+    }
+
+    tbody td:nth-child(1),
+    tbody td:nth-child(2) {
+        min-width: 120px;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body {
+    animation: fadeIn 1s ease-in;
+}
