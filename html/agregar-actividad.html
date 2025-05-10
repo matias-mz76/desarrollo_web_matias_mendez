@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/validacion-actividad.js" type="module"></script>
+    <title>Formulario</title>
+    <link rel="stylesheet" href="../css/agregar-actividad.css">
+</head>
+<body>
+    <h1>Formulario actividades sociales</h1>
+    <p>Completa el siguiente formulario para agregar tu actividad social.</p>
+    <form class="form" id="formulario">
+        <fieldset>
+            <legend>¿Dónde?</legend>
+            <div id="regionComuna-input" class="group-input">
+                <label for="region">Región:</label><br>
+                <select id="region">
+                </select><br>
+        
+                <label for="comuna">Comuna:</label><br>
+                <select id="comuna">
+                    <option value="sin-comuna">-- Seleccione comuna --</option>
+                </select><br>
+            </div>
+            <label for="sector">Sector:</label>
+            <input type="text" id="sector" name="sector" size="100">
+        </fieldset>
+        
+        <div id="datos-organizador" class="group-input">  
+            <fieldset>
+                <legend>¿Quién organiza?</legend>
+                <div id="nombre-input" class="group-input">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" size="80" required>
+                </div>
+                <div id="email-input" class="group-input">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" size="30" required>
+                </div>
+                <div id="telefono-input" class="group-input">
+                    <label for="telefono">Número de celular:</label>
+                    <input type="tel" id="telefono" name="phone" size="15" placeholder="+569 1234 5678">
+                </div>
+                <div id="contactar-por-input" class="group-input">
+                    <label for="contactar-por">Contactar por:</label>
+                    <select id="contactar-por">
+                        <option value="">Seleccione un medio</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="x">X</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                    <div id="inputs-contacto"></div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <div id="datos-actividad" class="group-input">
+            <fieldset>
+                <legend>¿Cuándo y de qué trata?</legend>
+                <div id="inicio-input" class="group-input">
+                    <label for="inicio">Día y hora de inicio:</label>
+                    <input type="datetime-local" id="inicio" name="inicio" required>
+                </div>
+                <div id="termino-input" class="group-input">
+                    <label for="termino">Día y hora de término:</label>
+                    <input type="datetime-local" id="termino" name="termino">
+                </div>
+              
+                <div id="descripcion-input" class="group-input">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" cols="50" rows="10"></textarea>
+                </div>
+                <label for="dropdown-button">Tema:</label>
+                <div class="dropdown">
+                    <button id="dropdown-button" class="dropdown-button">Escoger</button>
+                    <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
+                        <label><input type="checkbox" value="musica"> Música</label>
+                        <label><input type="checkbox" value="deporte"> Deporte</label>
+                        <label><input type="checkbox" value="ciencias"> Ciencias</label>
+                        <label><input type="checkbox" value="religion"> Religión</label>
+                        <label><input type="checkbox" value="politica"> Política</label>
+                        <label><input type="checkbox" value="tecnologia"> Tecnología</label>
+                        <label><input type="checkbox" value="juegos"> Juegos</label>
+                        <label><input type="checkbox" value="baile"> Baile</label>
+                        <label><input type="checkbox" value="comida"> Comida</label>
+                        <label><input type="checkbox" value="otro"> Otro</label>
+                    </div>
+                </div>
+                <div id="otro-tema" class="group-input" style="display: none;">
+                    <label for="otro-tema-input">Descripción del Otro tema:</label>
+                    <input type="text" id="otro-tema-input" name="otro-tema" minlength="3" maxlength="15">
+                    <button type="button">Guardar</button>
+                </div>
+
+                <div id="foto-input" class="group-input">
+                    <label for="agregar-foto">Fotos:</label>
+                    <div id="fotos-container"></div>
+                    <button id="agregar-foto" type="button">Agregar</button>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="buttons" id="registroHincha">
+            <button type="button" id="botonRegistroActividad">
+                Registrar Actividad
+            </button>
+        </div>
+    </form>
+</body>
+</html>
