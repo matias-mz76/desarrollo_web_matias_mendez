@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Agregamos esto para que sea vea bien en celulares -->
     <title>Portal de Actividades Recreativas</title>
-    <link rel="stylesheet" href="../css/portada.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portada.css') }}">
 <body>
     <header>
         <h1>Bienvenido al Portal de Actividades Recreativas</h1>
@@ -12,58 +12,33 @@
     </header>
     <nav>
         <ul>
-            <li><a id="agregar-actividad" href="/html/agregar-actividad.html">Agregar actividad</a></li>
-            <li><a id="ver-listado" href="/html/ver-actividades.html">Ver listado de actividades</a></li>
-            <li><a id="ver-estadisticas" href="/html/ver-estadisticas.html">Estadísticas</a></li>
+            <li><a id="agregar-actividad" href="{{ url_for('agregar_actividad') }}">Agregar actividad</a></li>
+            <li><a id="ver-listado" href="{{ url_for('ver_actividades') }}">Ver listado de actividades</a></li>
+            <li><a id="ver-estadisticas" href="{{ url_for('ver_estadisticas') }}">Estadísticas</a></li>
         </ul>
     </nav>
     <section>
-        <h2>Últimas actividades registradas</h2>
-        <div class="event-table">
-            <div class="event-header">Inicio</div>
-            <div class="event-header">Término</div>
-            <div class="event-header">Comuna</div>
-            <div class="event-header">Sector</div>
-            <div class="event-header">Tema</div>
-            <div class="event-header">Foto</div>
-        
-            <div class="event-cell">2025-03-28 02:00</div>
-            <div class="event-cell">-</div>
-            <div class="event-cell">Santiago</div>
-            <div class="event-cell"> Plaza Concha y Toro</div>
-            <div class="event-cell">Club de la pelea</div>
-            <div class="event-cell"><img class="event-image" src="../images/pelea.jfif" alt="Gente peleando"></div>
-        
-            <div class="event-cell">2025-03-27 17:00</div>
-            <div class="event-cell">2025-03-27 20:00</div>
-            <div class="event-cell">Santiago</div>
-            <div class="event-cell">Beauchef 850, Sala F10</div>
-            <div class="event-cell">Club de Cine</div>
-            <div class="event-cell"><img class="event-image" src="../images/cine.jfif" alt="Sala de estudios utilizada como cine"></div>
-        
-            <div class="event-cell">2025-04-05 09:00</div>
-            <div class="event-cell">2025-04-05 12:00</div>
-            <div class="event-cell">Providencia</div>
-            <div class="event-cell">Parque Bustamante</div>
-            <div class="event-cell">Bicicletada </div>
-            <div class="event-cell"><img class="event-image" src="../images/bicicleta.jfif" alt="Gente andando en bicicleta"></div>
-        
-            <div class="event-cell">2025-04-12 16:00</div>
-            <div class="event-cell">2025-04-12 20:00</div>
-            <div class="event-cell">Ñuñoa</div>
-            <div class="event-cell">Afueras del Estadio Nacional </div>
-            <div class="event-cell">Batalla de rap</div>
-            <div class="event-cell"><img class="event-image" src="../images/batallarap.jfif" alt="Gente rapeando"></div>
-        
-            <div class="event-cell">2025-04-19 16:00</div>
-            <div class="event-cell">2025-04-19 20:00</div>
-            <div class="event-cell">Santiago</div>
-            <div class="event-cell">Beauchef 850, Sala S21</div>
-            <div class="event-cell">Orquesta Universitaria</div>
-            <div class="event-cell"><img class="event-image" src="../images/orquesta.jfif" alt="Estudiantes tocando instrumentos"></div>
+    <h2>Últimas actividades registradas</h2>
+    <div class="event-table">
+        <div class="event-header">Inicio</div>
+        <div class="event-header">Término</div>
+        <div class="event-header">Comuna</div>
+        <div class="event-header">Sector</div>
+        <div class="event-header">Tema</div>
+        <div class="event-header">Foto</div>
+        {% for actividad in actividades %}
+        <div class="event-cell">{{ actividad.dia_hora_inicio }}</div>
+        <div class="event-cell">{{ actividad.dia_hora_termino }}</div>
+        <div class="event-cell">{{ actividad.comuna.nombre }}</div>
+        <div class="event-cell">{{ actividad.sector }}</div>
+        <div class="event-cell">{{ actividad.nombre }}</div>
+        <div class="event-cell">
+            {% if actividad.fotos %}
+            <img class="event-image" src="{{ url_for('static', filename='images/' + actividad.fotos[0].nombre_archivo) }}" alt="Imagen de la actividad">
+            {% endif %}
         </div>
-        
-    </section>
+        {% endfor %}
+    </div>
 
   
 </body>

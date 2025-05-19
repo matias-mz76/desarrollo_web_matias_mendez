@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/js/ver-actividades.js" defer></script>
+    <script src="{{ url_for('static', filename='js/ver-actividades.js') }}" defer></script>
     <title>Últimas Actividades Registradas</title>
-    <link rel="stylesheet" href="../css/ver-actividades.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ver-actividades.css') }}">
 </head>
 <body>
     <h1>Lista de Actividades</h1>
-    <button class="home-button" onclick="window.location.href='/html/portada.html'">
+    <button class="home-button" onclick="window.location.href='{{ url_for('portada') }}'">
         Volver a la portada
     </button>
     <table>
@@ -25,70 +25,48 @@
             </tr>
         </thead>
         <tbody>
+            {% for actividad in actividades %}
             <tr>
-                <td>2025-03-28 02:00</td>
-                <td>-</td>
-                <td>Santiago</td>
-                <td>Plaza Concha y Toro</td>
-                <td>Club de la pelea</td>
-                <td>Brad Norton</td>
+                <td>{{ actividad.dia_hora_inicio }}</td>
+                <td>{{ actividad.dia_hora_termino if actividad.dia_hora_termino else '-' }}</td>
+                <td>{{ actividad.comuna.nombre }}</td>
+                <td>{{ actividad.sector }}</td>
                 <td>
-                    <img src="../images/pelea.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
+                    {% for tema in actividad.temas %}
+                        {{ tema.tema }}{% if tema.glosa_otro %}: {{ tema.glosa_otro }}{% endif %}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ actividad.nombre }}</td>
+                <td>
+                    {% for foto in actividad.fotos %}
+                        <img src="{{ url_for('static', filename='images/' + foto.nombre_archivo) }}" 
+                             alt="Foto de actividad" width="320" height="240" class="activity-image">
+                    {% endfor %}
                 </td>
             </tr>
-            <tr>
-                <td>2025-03-27 17:00</td>
-                <td>2025-03-27 20:00</td>
-                <td>Santiago</td>
-                <td>Beauchef 850, Sala F10</td>
-                <td>Club de Cine</td>
-                <td>Martin Fuenzalida</td>
-                <td>
-                    <img src="../images/cine.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/cine2.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                </td>
-            </tr>
-            <tr>
-                <td>2025-04-05 09:00</td>
-                <td>-</td>
-                <td>Providencia</td>
-                <td>Parque Bustamante</td>
-                <td>Bicicletada</td>
-                <td>Felipe Ruminot</td>
-                <td>
-                    <img src="../images/bicicleta.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/bicicleta2.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/bicicleta3.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                </td>
-            </tr>
-            <tr>
-                <td>2025-04-12 16:00</td>
-                <td>2025-04-12 20:00</td>
-                <td>Ñuñoa</td>
-                <td>Afueras del Estadio Nacional</td>
-                <td>Batalla de rap</td>
-                <td>Juan Sativo</td>
-                <td>
-                    <img src="../images/batallarap.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/batallarap2.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/batallarap3.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/batallarap4.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                </td>
-            </tr>
-            <tr>
-                <td>2025-04-19 16:00</td>
-                <td>2025-04-19 20:00</td>
-                <td>Santiago</td>
-                <td>Beauchef 850, Sala S21</td>
-                <td>Orquesta Universitaria</td>
-                <td>María Música</td>
-                <td>
-                    <img src="../images/orquesta.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                    <img src="../images/orquesta2.jfif" alt="Foto de actividad" width="320" height="240" class="activity-image">
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
-   
+    <div>
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('ver_actividades', page=pagination.prev_num) }}">Anterior</a>
+        {% endif %}
+
+        {% for page_num in pagination.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != pagination.page %}
+                    <a href="{{ url_for('ver_actividades', page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                    <strong>{{ page_num }}</strong>
+                {% endif %}
+            {% else %}
+                <span>&hellip;</span>
+            {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+            <a href="{{ url_for('ver_actividades', page=pagination.next_num) }}">Siguiente</a>
+        {% endif %}
+    </div>
 </body>
 </html>
