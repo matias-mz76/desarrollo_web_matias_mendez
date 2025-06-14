@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Actividades Recreativas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portada.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido al Portal de Actividades Recreativas</h1>
+        <p>¡Revisa las actividades que se desarrollan en tu sector!</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a id="agregar-actividad" href="{{ url_for('agregar_actividad') }}">Agregar actividad</a></li>
+            <li><a id="ver-listado" href="{{ url_for('ver_actividades') }}">Ver listado de actividades</a></li>
+            <li><a id="ver-estadisticas" href="{{ url_for('ver_estadisticas') }}">Estadísticas</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <section>
+            <h2>Últimas actividades registradas</h2>
+            <div class="event-table">
+                <div class="event-header">Inicio</div>
+                <div class="event-header">Término</div>
+                <div class="event-header">Comuna</div>
+                <div class="event-header">Sector</div>
+                <div class="event-header">Tema</div>
+                <div class="event-header">Foto</div>
+                {% for actividad in actividades %}
+                <div class="event-cell">{{ actividad.dia_hora_inicio.strftime('%d/%m/%Y %H:%M') }}</div> 
+                <div class="event-cell">{{ actividad.dia_hora_termino.strftime('%d/%m/%Y %H:%M') if actividad.dia_hora_termino else '-' }}</div> <!-- Formateo de fecha -->
+                <div class="event-cell">{{ actividad.comuna.nombre }}</div>
+                <div class="event-cell">{{ actividad.sector }}</div>
+                <div class="event-cell">{{ actividad.temas[0].tema if actividad.temas else 'Sin Tema' }}</div>
+                <div class="event-cell">
+                    {% if actividad.fotos %}
+                    <img class="event-image" src="{{ url_for('static', filename='images/' + actividad.fotos[0].nombre_archivo) }}" alt="Imagen de la actividad">
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main> 
+</body>
+</html>

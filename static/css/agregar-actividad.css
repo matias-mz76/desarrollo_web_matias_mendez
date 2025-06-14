@@ -1,0 +1,317 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+
+header {
+    background-color: #2c3e50; /* Fondo oscuro */
+    color: #ecf0f1; /* Letras claras */
+    text-align: center;
+    padding: 2rem 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 2rem; /* Espacio antes de la tabla */
+}
+
+/* Título H1 dentro del header */
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white; /* Aseguramos que el h1 también sea blanco */
+}
+
+/* Párrafo dentro del header */
+header p {
+    font-size: 1.2rem;
+    color: #bdc3c7; /* Un gris claro para el subtítulo */
+}
+
+
+/* Formulario */
+.form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Fieldset */
+fieldset {
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    color: #3498db;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+/* Grupos de input */
+.group-input {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Dropdown para temas */
+.dropdown {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.dropdown-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2980b9;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: #2980b9;
+}
+
+.dropdown-menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-menu label {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu label:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-menu label input {
+    margin-right: 8px;
+}
+
+.dropdown-menu label input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #bdc3c7;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.dropdown-menu label input[type="checkbox"]:checked {
+    background-color: #3498db;
+    border-color: #3498db;
+}
+
+.dropdown-menu label input[type="checkbox"]:checked::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+}
+
+/* Botones */
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* Fotos */
+#fotos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#agregar-foto {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#agregar-foto:hover {
+    background-color: #2980b9;
+}
+
+
+#submit-actividad { 
+    
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+  
+    color: white;
+    background-image: linear-gradient(to bottom, #34495e, #2c3e50);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(44, 62, 80, 0.2);
+    
+    /* Comportamiento */
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#submit-actividad:hover {
+    background-image: linear-gradient(to bottom, #4a688a, #34495e);
+    box-shadow: 0 6px 8px rgba(44, 62, 80, 0.3);
+    transform: translateY(-2px);
+}
+
+#submit-actividad:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(44, 62, 80, 0.2);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .form {
+        padding: 15px;
+    }
+
+    fieldset {
+        padding: 10px;
+    }
+
+    .dropdown-menu {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .dropdown-menu {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+body {
+    animation: fadeIn 1s ease-in;
+}
+
+/* Estilo para el botón "Volver a la Portada" */
+.back-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 25px; 
+    background-color: #2980b9; 
+    color: white;
+    text-decoration: none; 
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+
+/* Estilo para los mensajes de error específicos de cada campo */
+.error-message {
+    display: block;
+    color: #e74c3c; 
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 5px; 
+    padding: 5px;
+    background-color: #fadbd8; 
+    border-left: 4px solid #c0392b; 
+    border-radius: 4px;
+}
+
+
+/* Estilo para los mensajes */
+.flash-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+.flash-success {
+    color: #155724; 
+    background-color: #d4edda; 
+    border-color: #c3e6cb;
+}
+
+.flash-danger {
+    color: #721c24; 
+    background-color: #f8d7da; 
+    border-color: #f5c6cb;
+}
+#otro-tema {
+    display: none;
+}

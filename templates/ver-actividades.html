@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Actividades Registradas</title>
+    <script src="{{ url_for('static', filename='js/ver-actividades.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ver-actividades.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Lista de Actividades</h1>
+        <p>Haz clic en cualquier fila para ver los detalles completos de la actividad.</p>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('portada') }}" class="back-button">← Volver a la Portada</a>
+    </nav>
+    
+    <main>
+        {% if actividades_data %}
+            <table id="tabla-actividades">
+                <thead>
+                    <tr>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th>Comuna</th>
+                        <th>Sector</th>
+                        <th>Tema</th>
+                        <th>Nombre Organizador</th>
+                        <th>Fotos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for actividad_data in actividades_data %}
+                    <tr class="fila-actividad"
+                        data-id="{{ actividad_data.id }}"
+                        data-nombre="{{ actividad_data.nombre }}"
+                        data-email="{{ actividad_data.email }}"
+                        data-celular="{{ actividad_data.celular or '' }}"
+                        data-descripcion="{{ actividad_data.descripcion | e }}"
+                        data-inicio-completo="{{ actividad_data.dia_hora_inicio.strftime('%d de %B de %Y a las %H:%M hrs') }}"
+                        data-termino-completo="{{ actividad_data.dia_hora_termino.strftime('%d de %B de %Y a las %H:%M hrs') if actividad_data.dia_hora_termino else '' }}"
+                        data-ubicacion="{{ actividad_data.comuna_nombre }}, {{ actividad_data.region_nombre }}"
+                        data-sector="{{ actividad_data.sector or '' }}"
+                        data-temas-json='{{ actividad_data.temas | tojson }}'
+                        data-contactos-json='{{ actividad_data.contactos | tojson }}'
+                        data-fotos-json='{{ actividad_data.fotos | tojson }}'
+                    >
+                        <td>{{ actividad_data.dia_hora_inicio.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td>{{ actividad_data.dia_hora_termino.strftime('%d/%m/%Y %H:%M') if actividad_data.dia_hora_termino else '-' }}</td>
+                        <td>{{ actividad_data.comuna_nombre }}</td>
+                        <td>{{ actividad_data.sector }}</td>
+                        <td>{{ (actividad_data.temas[0].tema if actividad_data.temas else 'General') | capitalize }}</td>
+                        <td>{{ actividad_data.nombre }}</td>
+                        <td>
+                            <div class="table-photos-container">
+                                {% for foto in actividad_data.fotos %}
+                                    <img src="{{ url_for('static', filename=foto.ruta_archivo) }}" 
+                                         alt="Foto de la actividad" 
+                                         class="activity-image-thumbnail"
+                                         width="320" height="240">
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-activities-message">No hay actividades registradas por el momento.</p>
+        {% endif %}
+    
+        <div class="pagination-container" id="paginacion">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('ver_actividades', page=pagination.prev_num) }}">« Anterior</a>
+            {% endif %}
+            {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    <a href="{{ url_for('ver_actividades', page=page_num) }}" class="page-num {{ 'current' if page_num == pagination.page else '' }}">{{ page_num }}</a>
+                {% else %}
+                    <span class="page-dots">…</span>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+                <a href="{{ url_for('ver_actividades', page=pagination.next_num) }}">Siguiente »</a>
+            {% endif %}
+        </div>
+    </main>
+    
+    <div id="detalle-container"></div>
+    
+</body>
+</html>

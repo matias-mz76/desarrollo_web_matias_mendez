@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Actividades</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/estadisticas.js') }}" defer></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>Estadísticas de Actividades</h1>
+        <p>Visualización de los datos de las actividades registradas en el portal.</p>
+    </header>
+
+    <nav>
+        <a href="{{ url_for('portada') }}" class="back-button">← Volver a la Portada</a>
+    </nav>
+        
+    <main class="stats-container">
+        <div class="chart-card">
+            <h2>Cantidad de Actividades por Día</h2>
+            <canvas id="actividadesPorDiaChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h2>Distribución de Actividades por Tema</h2>
+            <canvas id="actividadesPorTemaChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h2>Actividades por Jornada (Mes a Mes)</h2>
+            <canvas id="actividadesPorJornadaChart"></canvas>
+        </div>
+    </main>
+        
+</body>
+</html>

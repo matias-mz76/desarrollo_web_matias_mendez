@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename='js/validacion-actividad.js') }}" type="module"></script>
+    <title>Formulario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar-actividad.css') }}">
+</head>
+<body>
+    
+    <header>
+    <h1>Formulario actividades sociales</h1>
+    <p>Completa el siguiente formulario para agregar tu actividad social.</p>
+    </header>
+     <nav> 
+    <a href="{{ url_for('portada') }}" class="back-button">← Volver a la Portada</a>
+     </nav>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form class="form" id="formulario" action="{{ url_for('agregar_actividad') }}" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>¿Dónde?</legend>
+            <div id="regionComuna-input" class="group-input">
+                <label for="region">Región:</label><br>
+                <select id="region" name="region" required>
+                     <option value="" selected disabled>-- Seleccione una Región --</option>
+                    {% for region in regiones %}
+                        <option value="{{ region.nombre }}" {% if request.form.get('region') == region.nombre %}selected{% endif %}>{{ region.nombre }}</option>
+                    {% endfor %}
+                </select><br>
+
+                <label for="comuna">Comuna:</label><br>
+                <select id="comuna" name="comuna">
+                    <option value="">-- Seleccione comuna --</option>
+                    {% for comuna in comunas_de_region %}
+                        <option value="{{ comuna.nombre }}" {% if request.form.get('comuna') == comuna.nombre %}selected{% endif %}>{{ comuna.nombre }}</option>
+                    {% endfor %}
+                </select><br>
+                {% if errors and errors.comuna %}<span class="error-message">{{ errors.comuna }}</span>{% endif %}
+            </div>
+            <label for="sector">Sector:</label>
+            <input type="text" id="sector" name="sector" size="100" value="{{ request.form.get('sector', '') }}">
+            {% if errors and errors.sector %}<span class="error-message">{{ errors.sector }}</span>{% endif %}
+        </fieldset>
+        
+        <div id="datos-organizador" class="group-input">  
+            <fieldset>
+                <legend>¿Quién organiza?</legend>
+                <div id="nombre-input" class="group-input">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" size="80" required value="{{ request.form.get('nombre', '') }}">
+                    {% if errors and errors.nombre %}<span class="error-message">{{ errors.nombre }}</span>{% endif %}
+                </div>
+                <div id="email-input" class="group-input">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" size="30" required value="{{ request.form.get('email', '') }}">
+                    {% if errors and errors.email %}<span class="error-message">{{ errors.email }}</span>{% endif %}
+                </div>
+                <div id="telefono-input" class="group-input">
+                    <label for="telefono">Número de celular:</label>
+                    <input type="tel" id="telefono" name="telefono" size="15" placeholder="+569 1234 5678" value="{{ request.form.get('telefono', '') }}">
+                    {% if errors and errors.telefono %}<span class="error-message">{{ errors.telefono }}</span>{% endif %}
+                </div>
+                <div id="contactar-por-input" class="group-input">
+                    <label for="contactar-por">Contactar por:</label>
+                    <select id="contactar-por">
+                        <option value="">-- Agrega un medio de contacto --</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="X">X</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="otra">Otra</option>
+                    </select>
+                    <div id="inputs-contacto"></div>
+                    {% if errors %}
+                        {% for medio in ['whatsapp', 'telegram', 'X', 'instagram', 'tiktok', 'otra'] %}
+                            {% if errors[medio] %}<span class="error-message">{{ errors[medio] }}</span>{% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </fieldset>
+        </div>
+        
+        <div id="datos-actividad" class="group-input">
+            <fieldset>
+                <legend>¿Cuándo y de qué trata?</legend>
+                <div id="inicio-input" class="group-input">
+                    <label for="inicio">Día y hora de inicio:</label>
+                    <input type="datetime-local" id="inicio" name="inicio" required value="{{ request.form.get('inicio', '') }}">
+                    {% if errors and errors.inicio %}<span class="error-message">{{ errors.inicio }}</span>{% endif %}
+                </div>
+                 <div id="termino-input" class="group-input">
+                    <label for="termino">Día y hora de término:</label>
+                    <input type="datetime-local" id="termino" name="termino" value="{{ request.form.get('termino', '') }}">
+                    {% if errors and errors.termino %}<span class="error-message">{{ errors.termino }}</span>{% endif %}
+                </div>
+                 <div id="descripcion-input" class="group-input">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" cols="50" rows="10">{{ request.form.get('descripcion', '') }}</textarea>
+                    {% if errors and errors.descripcion %}<span class="error-message">{{ errors.descripcion }}</span>{% endif %}
+                </div>
+
+                <label for="dropdown-button">Tema:</label>
+                <div class="dropdown">
+                    <button id="dropdown-button" class="dropdown-button" type="button">Escoger</button>
+                    <div id="dropdown-menu" class="dropdown-menu" style="display: none;">
+                        <label><input type="checkbox" name="temas[]" value="música" {% if 'musica' in request.form.getlist('temas[]') %}checked{% endif %}> Música</label>
+                        <label><input type="checkbox" name="temas[]" value="deporte" {% if 'deporte' in request.form.getlist('temas[]') %}checked{% endif %}> Deporte</label>
+                        <label><input type="checkbox" name="temas[]" value="ciencias" {% if 'ciencias' in request.form.getlist('temas[]') %}checked{% endif %}> Ciencias</label>
+                        <label><input type="checkbox" name="temas[]" value="religión" {% if 'religion' in request.form.getlist('temas[]') %}checked{% endif %}> Religión</label>
+                        <label><input type="checkbox" name="temas[]" value="política" {% if 'politica' in request.form.getlist('temas[]') %}checked{% endif %}> Política</label>
+                        <label><input type="checkbox" name="temas[]" value="tecnología" {% if 'tecnologia' in request.form.getlist('temas[]') %}checked{% endif %}> Tecnología</label>
+                        <label><input type="checkbox" name="temas[]" value="juegos" {% if 'juegos' in request.form.getlist('temas[]') %}checked{% endif %}> Juegos</label>
+                        <label><input type="checkbox" name="temas[]" value="baile" {% if 'baile' in request.form.getlist('temas[]') %}checked{% endif %}> Baile</label>
+                        <label><input type="checkbox" name="temas[]" value="comida" {% if 'comida' in request.form.getlist('temas[]') %}checked{% endif %}> Comida</label>
+                        <label><input type="checkbox" name="temas[]" value="otro" {% if 'otro' in request.form.getlist('temas[]') %}checked{% endif %}> Otro</label>
+                    </div>
+                </div>
+                {% if errors and errors.temas %}
+                    <span class="error-message">{{ errors.temas }}</span>
+                {% endif %}
+                <div id="otro-tema" class="group-input"> 
+                    <label for="otro-tema-input">Descripción del Otro tema:</label>
+                    <input type="text" id="otro-tema-input" name="otro-tema-input" minlength="3" maxlength="15" value="{{ request.form.get('otro-tema-input', '') }}">
+                    {% if errors and errors['otro-tema-input'] %}
+                        <span class="error-message">{{ errors['otro-tema-input'] }}</span>
+                    {% endif %}
+                </div>
+    
+
+                <div id="foto-input" class="group-input">
+                    <label for="agregar-foto">Fotos:</label>
+                    <div id="fotos-container"></div>
+                    <button id="agregar-foto" type="button">Agregar</button>
+                    {% if errors and errors.fotos %}<span class="error-message">{{ errors.fotos }}</span>{% endif %}
+                </div>
+            </fieldset>
+        </div>
+        <div class="buttons" id="registroActividad">
+            <button type="submit" id="submit-actividad">Registrar Actividad</button>
+        </div>
+    </form>
+    
+    
+
+</body>
+</html>
